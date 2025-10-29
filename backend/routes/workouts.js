@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express') // import express module to create router
 const {
   getWorkouts, 
   getWorkout, 
