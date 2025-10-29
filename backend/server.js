@@ -16,7 +16,7 @@ app.use((req, res, next) => {
   next() // proceed to the next middleware or route handler
 })
 
-// routes
+// connects routes
 app.use('/api/workouts', workoutRoutes)
 
 // connect to db
