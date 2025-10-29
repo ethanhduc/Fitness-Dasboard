@@ -8,11 +8,12 @@ const workoutRoutes = require('./routes/workouts')
 const app = express()
 
 // middleware
-app.use(express.json())
+app.use(express.json()) // to parse JSON bodies from strings to objects
 
+// logging middleware (for development purposes)
 app.use((req, res, next) => {
   console.log(req.path, req.method)
-  next()
+  next() // proceed to the next middleware or route handler
 })
 
 // routes
