@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const getWorkouts = async (req, res) => {
   const workouts = await Workout.find({}).sort({createdAt: -1})//.find({}) is used to get all workouts (SELECT * FROM workouts), and sort({createdAt: -1}) sorts them in descending order based on creation date
 
-  res.status(200).json(workouts)
+  res.status(200).json(workouts) // send back the workouts as JSON with a 200 OK status
 }
 
 // get a single workout
