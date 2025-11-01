@@ -1,5 +1,5 @@
-const Workout = require('../models/workoutModel')
-const mongoose = require('mongoose')
+const Workout = require('../models/workoutModel') // import the Workout model to interact with the workouts collection in the database
+const mongoose = require('mongoose') // import mongoose library to work with MongoDB object IDs
 
 // get all workouts
 const getWorkouts = async (req, res) => {
@@ -10,9 +10,9 @@ const getWorkouts = async (req, res) => {
 
 // get a single workout
 const getWorkout = async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params // extract the id from the request parameters as a constant named id
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
+  if (!mongoose.Types.ObjectId.isValid(id)) { // check if the provided id is a valid MongoDB ObjectId
     return res.status(404).json({error: 'No such workout'})
   }
 
@@ -29,7 +29,8 @@ const getWorkout = async (req, res) => {
 const createWorkout = async (req, res) => {
   const {title, load, reps} = req.body
 
-  let emptyFields = []
+  // track which fields are empty
+  let emptyFields = [] 
 
   if (!title) {
     emptyFields.push('title')
@@ -61,12 +62,16 @@ const deleteWorkout = async (req, res) => {
     return res.status(400).json({error: 'No such workout'})
   }
 
+  // delete the workout and is stored in a variable
   const workout = await Workout.findOneAndDelete({_id: id})
+  //const workout = await Workout.findByIdAndDelete(id)
 
+  // check if workout existed
   if(!workout) {
     return res.status(400).json({error: 'No such workout'})
   }
 
+  // return the deleted workout to client for confirmation
   res.status(200).json(workout)
 }
 
