@@ -10,11 +10,11 @@ const Home = () => {
 
   useEffect(() => {
     const fetchWorkouts = async () => {
-      const response = await fetch('/api/workouts')
+      const response = await fetch('/api/workouts') // Fetch workouts from backend
       const json = await response.json()
 
       if (response.ok) {
-        dispatch({type: 'SET_WORKOUTS', payload: json})
+        dispatch({type: 'SET_WORKOUTS', payload: json}) // Set workouts in context
       }
     }
 

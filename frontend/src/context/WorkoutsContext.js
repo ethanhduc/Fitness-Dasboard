@@ -2,7 +2,7 @@ import { createContext, useReducer } from 'react'
 
 export const WorkoutsContext = createContext()
 
-export const workoutsReducer = (state, action) => {
+export const workoutsReducer = (state, action) => {// Reducer function to manage workouts state
   switch (action.type) {
     case 'SET_WORKOUTS':
       return { 
@@ -17,7 +17,7 @@ export const workoutsReducer = (state, action) => {
         workouts: state.workouts.filter(w => w._id !== action.payload._id) 
       }
     default:
-      return state
+      return state // no change to state
   }
 }
 
