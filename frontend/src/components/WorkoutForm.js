@@ -13,7 +13,7 @@ const WorkoutForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const workout = {title, load, reps}
+    const workout = {title, load, reps} // create workout object
     
     const response = await fetch('/api/workouts', {
       method: 'POST',
@@ -22,7 +22,7 @@ const WorkoutForm = () => {
         'Content-Type': 'application/json'
       }
     })
-    const json = await response.json()
+    const json = await response.json() // receives res from backend and parses it to json
 
     if (!response.ok) {
       setError(json.error)
