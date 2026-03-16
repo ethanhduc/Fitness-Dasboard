@@ -1,20 +1,41 @@
-import dotenv from "dotenv"
-import readline from "readline"
-import { GoogleGenerativeAI } from "@google/genai"
+const { GoogleGenAI } = require("@google/genai");
+const Workout = require("../models/workoutModel");
 
-dotenv.config(); // Load environment variables from .env file
+const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
 
-const genAI = new GoogleGenerativeAI(process.env.AI_API_KEY);
+const sendMessage = async (req, res) => {
+  try {
+    const { message, history } = req.body;
+    const workouts = await Workout.find({});
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-})
+    const chat = ai.chats.create({
+      model: "gemini-2.5-flash",
+      systemInstruction: `
+        You are an expert personal fitness coach assistant built into a workout tracking app.
+        The user's recent workouts are provided below. Use this data to give personalized, 
+        specific advice. Keep responses concise and encouraging.
 
-async function main(){
-    const model = genAI.getGenerativeModel({model : "Default Gemini API Key"})
+        When analyzing workouts, consider:
+        - Volume and frequency trends
+        - Signs of overtraining or undertraining
+        - Muscle group balance
+        - Progressive overload opportunities
+
+        Always respond in a conversational, motivating tone. If the user asks something 
+        unrelated to fitness, politely redirect them back to their training.
+
+        User's recent workouts: ${JSON.stringify(workouts)}`,
+      history: history
+    });
+
+    const response = await chat.sendMessage({ message });
+    res.status(200).json({ reply: response.text });
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 }
 
 module.exports = {
-  
+  sendMessage
 }
