@@ -6,6 +6,13 @@ const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
 const sendMessage = async (req, res) => {
   try {
     const { message, history } = req.body;
+
+    if (!message || !message.trim()) {
+      return res.status(400).json({ error: 'Please provide a message' });
+    }
+
+    const safeHistory = Array.isArray(history) ? history : [];
+    
     const workouts = await Workout.find({});
 
     const chat = ai.chats.create({
@@ -25,7 +32,7 @@ const sendMessage = async (req, res) => {
         unrelated to fitness, politely redirect them back to their training.
 
         User's recent workouts: ${JSON.stringify(workouts)}`,
-      history: history
+      history: safeHistory
     });
 
     const response = await chat.sendMessage({ message });
