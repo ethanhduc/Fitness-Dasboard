@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 
+ // import routes
 const workoutRoutes = require('./routes/workouts')
 const chatRoutes = require('./routes/chat')
 
