@@ -15,6 +15,7 @@ const WorkoutForm = () => {
 
     const workout = {title, load, reps} // create workout object
     
+    //POST req
     const response = await fetch('/api/workouts', {
       method: 'POST',
       body: JSON.stringify(workout),
