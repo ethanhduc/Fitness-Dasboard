@@ -4,6 +4,7 @@ import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
 // components
 import WorkoutDetails from "../components/WorkoutDetails"
 import WorkoutForm from "../components/WorkoutForm"
+import ChatBot from "../components/ChatBot"
 
 const Home = () => {
   const { workouts, dispatch } = useWorkoutsContext()
@@ -29,6 +30,7 @@ const Home = () => {
         ))}
       </div>
       <WorkoutForm />
+      <ChatBot />
     </div>
   )
 }
