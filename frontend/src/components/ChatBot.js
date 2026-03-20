@@ -21,7 +21,7 @@ const ChatBot = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ message: input, history: messages })
+        body: JSON.stringify({ message: input, history: messages }) // Send current message and chat history to backend
       })
 
       // Parse response from backend
@@ -30,12 +30,12 @@ const ChatBot = () => {
       if (!response.ok) {
         setError(json.error)
       } else {
-        setMessages([
-          ...messages, // Keep existing messages
+        setMessages(prev => [
+          ...prev, // Keep existing messages
           { sender: 'user', text: input }, // Add user's message
           { sender: 'ai', text: json.response } // Add AI's response
         ])
-        setInput('')
+        setInput('') // Clear input field
       }
     } catch (error) {
       setError('Failed to send message')
@@ -47,7 +47,27 @@ const ChatBot = () => {
   return (
     <div className="chatbot">
       {/* Messages display */}
+      <div className="messages">
+        {messages.map((msg, index) => (
+          <div key={index} className={`message ${msg.sender}`}>
+            <span>{msg.text}</span>
+          </div>
+        ))}
+      </div>
       {/* Input form */}
+      <form onSubmit={handleSendMessage}>
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Type your message..."
+          disabled={loading}
+        />
+        <button type="submit" disabled={loading}>
+          {loading ? 'Sending...' : 'Send'}
+        </button>
+      </form>
+      {error && <div className="error">{error}</div>}
     </div>
   )
 }
