@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
 const ChatBot = () => {
-  const [messages, setMessages] = useState([])  // [{sender: 'user'|'ai', text: '...'}]
-  const [input, setInput] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [messages, setMessages] = useState([])  // State to hold chat messages
+  const [input, setInput] = useState('') // State for current input message
+  const [loading, setLoading] = useState(false) // State to indicate if a message is being sent
+  const [error, setError] = useState(null) // State to hold any error messages
 
   const handleSendMessage = async (e) => {
     e.preventDefault()
@@ -46,6 +46,7 @@ const ChatBot = () => {
 
   return (
     <div className="chatbot">
+        <h3>Fitness Coach ChatBot</h3>
       {/* Messages display */}
       <div className="messages">
         {messages.map((msg, index) => (
