@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const ChatBot = () => {
-  const [messages, setMessages] = useState([])  // State to hold chat messages
+  const [messages, setMessages] = useState([])  // State to hold chat messages (array of objects)
   const [input, setInput] = useState('') // State for current input message
   const [loading, setLoading] = useState(false) // State to indicate if a message is being sent
   const [error, setError] = useState(null) // State to hold any error messages

@@ -109,7 +109,7 @@ input.error {
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
-  height: 500px;
+  height: 300px;
 }
 
 .chatbot h3 {
