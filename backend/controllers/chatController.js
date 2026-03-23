@@ -44,7 +44,7 @@ const sendMessage = async (req, res) => {
       history: transformedHistory 
     });
 
-    const response = await chat.sendMessage({ content: message });
+    const response = await chat.sendMessage({ message });
     res.status(200).json({ response: response.text });
 
   } catch (error) {
