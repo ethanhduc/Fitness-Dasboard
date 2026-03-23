@@ -39,7 +39,7 @@ const sendMessage = async (req, res) => {
     console.log('System instruction:', systemInstruction); // Debug: check what's being sent
 
     const chat = await ai.chats.create({
-      model: "gemini-2.5-flash",
+      model: "gemini-2.0-flash",
       systemInstruction: systemInstruction,
       history: transformedHistory 
     });
