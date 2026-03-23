@@ -11,13 +11,16 @@ const sendMessage = async (req, res) => {
       return res.status(400).json({ error: 'Please provide a message' });
     }
 
-    const safeHistory = Array.isArray(history) ? history : [];
-    
-    const workouts = await Workout.find({});
+    const transformedHistory = history.map(msg => ({ // Transform frontend format to Gemini format
+      role: msg.sender === 'user' ? 'user' : 'model', // if sender is 'user', role is 'user', else 'model'
+      parts: [{ text: msg.text }] // Gemini expects an array of parts, each with a text property
+    }));
 
-    const chat = ai.chats.create({
-      model: "gemini-2.5-flash",
-      systemInstruction: `
+    const workouts = await Workout.find({});
+    
+    console.log('Workouts fetched:', workouts); // Debug: check if workouts are there
+
+    const systemInstruction = `
         You are an expert personal fitness coach assistant built into a workout tracking app.
         The user's recent workouts are provided below. Use this data to give personalized, 
         specific advice. Keep responses concise and encouraging.
@@ -31,11 +34,17 @@ const sendMessage = async (req, res) => {
         Always respond in a conversational, motivating tone. If the user asks something 
         unrelated to fitness, politely redirect them back to their training.
 
-        User's recent workouts: ${JSON.stringify(workouts)}`,
-      history: safeHistory
+        User's recent workouts: ${JSON.stringify(workouts)}`;
+    
+    console.log('System instruction:', systemInstruction); // Debug: check what's being sent
+
+    const chat = await ai.chats.create({
+      model: "gemini-2.5-flash",
+      systemInstruction: systemInstruction,
+      history: transformedHistory 
     });
 
-    const response = await chat.sendMessage({ message });
+    const response = await chat.sendMessage({ content: message });
     res.status(200).json({ response: response.text });
 
   } catch (error) {
