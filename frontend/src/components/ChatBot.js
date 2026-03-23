@@ -15,13 +15,13 @@ const ChatBot = () => {
     setError(null)
     
     try {
-      // POST request to backend with message and history
+      // POST request to backend with input message and message history
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ message: input, history: messages }) // Send current message and chat history to backend
+        body: JSON.stringify({ message: input, history: messages }) // Sends this as req.body to backend
       })
 
       // Parse response from backend
@@ -30,7 +30,7 @@ const ChatBot = () => {
       if (!response.ok) {
         setError(json.error)
       } else {
-        setMessages(prev => [
+        setMessages(prev => [ // functional state update to ensure we get the latest messages
           ...prev, // Keep existing messages
           { sender: 'user', text: input }, // Add user's message
           { sender: 'ai', text: json.response } // Add AI's response
