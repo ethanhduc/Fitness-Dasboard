@@ -18,8 +18,12 @@ const sendMessage = async (req, res) => {
 
     const workouts = await Workout.find({});
     
-    console.log('Workouts fetched:', workouts); // Debug: check if workouts are there
-
+    const trimmedWorkouts = workouts.map(w => ({
+      title: w.title,
+      reps: w.reps,
+      load: w.load
+    }))
+    
     const systemInstruction = `
         You are an expert personal fitness coach assistant built into a workout tracking app.
         The user's recent workouts are provided below. Use this data to give personalized, 
@@ -34,7 +38,7 @@ const sendMessage = async (req, res) => {
         Always respond in a conversational, motivating tone. If the user asks something 
         unrelated to fitness, politely redirect them back to their training.
 
-        User's recent workouts: ${JSON.stringify(workouts)}`;
+        User's recent workouts: ${JSON.stringify(trimmedWorkouts)}`;
     
     console.log('System instruction:', systemInstruction); // Debug: check what's being sent
 
