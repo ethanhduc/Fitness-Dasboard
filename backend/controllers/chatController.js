@@ -17,7 +17,7 @@ const sendMessage = async (req, res) => {
     }));
 
     const workouts = await Workout.find({});
-    
+
     const trimmedWorkouts = workouts.map(w => ({
       title: w.title,
       reps: w.reps,
@@ -43,7 +43,7 @@ const sendMessage = async (req, res) => {
     console.log('System instruction:', systemInstruction); // Debug: check what's being sent
 
     const chat = await ai.chats.create({
-      model: "gemini-2.0-flash",
+      model: "gemini-2.5-flash-lite",
       systemInstruction: systemInstruction,
       history: transformedHistory 
     });
