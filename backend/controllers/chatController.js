@@ -40,10 +40,6 @@ const sendMessage = async (req, res) => {
 
         User's recent workouts: ${JSON.stringify(trimmedWorkouts)}`;
     
-    console.log('System instruction being sent:', systemInstruction)
-    console.log('History being sent:', transformedHistory)
-    console.log('Message being sent:', message)
-    
     const chat = await ai.chats.create({
       model: "gemini-2.5-flash-lite",
       config: {systemInstruction: systemInstruction},
