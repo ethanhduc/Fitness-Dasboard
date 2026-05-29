@@ -1,11 +1,11 @@
-const { GoogleGenAI } = require("@google/genai");
+const { GoogleGenAI } = require("@google/genai"); //calls the google gen ai library allowing us to interact with the Gemini AP
 const Workout = require("../models/workoutModel");
 
 const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
 
 const sendMessage = async (req, res) => {
   try {
-    const { message, history } = req.body;
+    const { message, history } = req.body; // message = new user input, history = array of previous messages (both user and model responses)
 
     if (!message || !message.trim()) {
       return res.status(400).json({ error: 'Please provide a message' });
