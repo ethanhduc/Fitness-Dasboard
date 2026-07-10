@@ -16,9 +16,9 @@ const sendMessage = async (req, res) => {
       parts: [{ text: msg.text }] // Gemini expects an array of parts, each with a text property
     }));
 
-    const workouts = await Workout.find({});
+    const workouts = await Workout.find({}); // Get all workouts from the database 
 
-    const trimmedWorkouts = workouts.map(w => ({
+    const trimmedWorkouts = workouts.map(w => ({ // Trim out unnecessary fields (id and timestamp) to preserve tokens
       title: w.title,
       reps: w.reps,
       load: w.load
@@ -40,7 +40,7 @@ const sendMessage = async (req, res) => {
 
         User's recent workouts: ${JSON.stringify(trimmedWorkouts)}`;
     
-    const chat = await ai.chats.create({
+    const chat = await ai.chats.create({ //create and configure chat session
       model: "gemini-2.5-flash-lite",
       config: {systemInstruction: systemInstruction},
       history: transformedHistory 
